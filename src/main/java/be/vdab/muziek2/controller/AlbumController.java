@@ -49,7 +49,8 @@ class AlbumController {
 
     @GetMapping("{id}/tracks")
     CollectionModel<Track> getTracks(@PathVariable long id) {
-        //CollectionModel<EntityModel<Track>> als returnwaarde is overbodig, CollectionModel is voldoende om als JSON weer te geven, maak een CM van je tracks attribuut
+        //Track is geen Entity, dus een EntityModel<Track> is overbodig. CollectionModel is voldoende om als JSON weer te geven, maak een CM van je tracks attribuut
+        //Een EntityModel is nodig wanneer je links wil toevoegen aan elke Track
         return albumService.findById(id).map(album -> CollectionModel.of(album.getTracks())
                         .add(links.linkForItemResource(album).slash("tracks").withRel("tracks"))
                         .add(links.linkToItemResource(album)/*.withRel("album")*/))
@@ -58,6 +59,7 @@ class AlbumController {
 
     //private inner (nested) class -- improve code readability and maintainability
     //plaats dit steeds voor de sluit accolade
+    //we kunnen dit hier plaatsen aangezien deze class enkel hier gebruikt wordt
     private static class AlbumArtiest {
         private final String album;
         private final String artiest;
