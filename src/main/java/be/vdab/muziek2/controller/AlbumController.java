@@ -17,6 +17,7 @@ import java.util.Optional;
 @ExposesResourceFor(Album.class)
 @RestController
 @RequestMapping("albums")
+@CrossOrigin(exposedHeaders = "Location")
 class AlbumController {
     private final AlbumService albumService;
     private final TypedEntityLinks.ExtendedTypedEntityLinks<Album> links;
